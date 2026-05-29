@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC国战服</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card-bg: #f5f5f5;
+            --accent: #4a90d9;
+            --border: #e0e0e0;
+            --shadow: rgba(0,0,0,0.08);
+        }
+        [data-theme="dark"] {
+            --bg: #1a1a2e;
+            --text: #e0e0e0;
+            --card-bg: #16213e;
+            --accent: #64b5f6;
+            --border: #2a2a4a;
+            --shadow: rgba(0,0,0,0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { opacity: 0.8; }
+        /* 导航 */
+        .nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .nav a {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.3s;
+        }
+        .nav a.active, .nav a:hover { background: var(--accent); }
+        /* 页面区块 */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        h3 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        .server-info {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .server-info code {
+            background: var(--border);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: "JetBrains Mono", "Fira Code", monospace;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin: 4px;
+        }
+        /* 双列布局 */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .two-col { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8em; }
+        }
+        .advantage-list {
+            list-style: none;
+            padding: 0;
+        }
+        .advantage-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            padding-left: 20px;
+        }
+        .advantage-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content a {
+            color: var(--accent);
+            word-break: break-all;
+        }
+        .qq-group {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--accent);
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主题切换 -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 深色模式</button>
+
+    <!-- 侧边导航点 -->
+    <nav class="nav" id="nav">
+        <a href="#page1"></a>
+        <a href="#page2"></a>
+        <a href="#page3"></a>
+        <a href="#page4"></a>
+        <a href="#page5"></a>
+    </nav>
+
+    <!-- ========== 第一页：首页 ========== -->
+    <section class="section" id="page1">
+        <div class="container" style="text-align:center;">
+            <h1>⚔️ MC国战服</h1>
+            <div class="card">
+                <h3>服务器连接地址</h3>
+                <p class="server-info">Java版（南京）：<code>mcguozhanfung.fucku.top</code></p>
+                <p class="server-info">Java版（北京）：<code>guozhankm.fucku.top</code></p>
+                <p class="server-info" style="margin-top:15px;">网易服务器邀请码（山头）：<code>mc.163.com/open/mc_realms/?realms=4DB33887EAE</code></p>
+            </div>
+            <div class="card">
+                <h3>服务器版本</h3>
+                <!-- ====== 在此修改版本号 ====== -->
+                <p class="server-info"><span class="badge">Java 1.18.2</span></p>
+                <!-- ====== 版本号结束 ====== -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 第二页：服务器优势 ========== -->
+    <section class="section" id="page2">
+        <div class="container">
+            <h2>🌟 服务器优势</h2>
+            <div class="card">
+                <ul class="advantage-list">
+                    <!-- ====== 在此增删优势条目 ====== -->
+                    <li>玩家积极性高，社区氛围活跃</li>
+                    <li>服务器活跃度高，全天候有人在线</li>
+                    <li>工单响应快速，问题及时解决</li>
+                    <li>管理组长期活跃，保障服务器稳定运营</li>
+                    <li>定期举办国战活动，玩法丰富(仅限基岩)</li>
+                    <!-- ====== 优势条目结束 ====== -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 第三页：管理体系 ========== -->
+    <section class="section" id="page3">
+        <div class="container">
+            <h2>🏛️ 管理体系</h2>
+            <div class="two-col">
+                <!-- 左列：网易基岩版 -->
+                <div class="card">
+                    <h3>📱 网易基岩版</h3>
+                    <ul class="advantage-list">
+                        <li>开服时间长，运营经验丰富</li>
+                        <li>抗压能力强，高并发稳定运行</li>
+                        <li>工单通过率高，处理效率优秀</li>
+                    </ul>
+                </div>
+                <!-- 右列：Java版 -->
+                <div class="card">
+                    <h3>💻 Java版</h3>
+                    <ul class="advantage-list">
+                        <li>抗压能力强，服务器性能优越</li>
+                        <li>工单响应速度高，反馈及时</li>
+                        <li>通过率较网易基岩版低（审核更严格）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 第四页：手机游玩Java版教程 ========== -->
+    <section class="section" id="page4">
+        <div class="container">
+            <h2>📲 手机如何游玩MC Java版</h2>
+            <div class="card">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <p>下载并安装游戏启动器</p>
+                        <a href="https://www.zalithlauncher.cn/zl2-download" target="_blank">https://www.zalithlauncher.cn/zl2-download</a>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <p>打开启动器，安装对应版本的游戏</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <p>注册账号（选择离线模式即可），输入服务器地址加入游戏</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 第五页：讨论群 ========== -->
+    <section class="section" id="page5">
+        <div class="container" style="text-align:center;">
+            <h2>💬 服务器讨论群</h2>
+            <div class="card">
+                <p>加入QQ群与其他玩家交流，获取最新服务器动态</p>
+                <div class="qq-group">
+                    <!-- ====== 在此修改群号 ====== -->
+                    QQ 1群：1104933021
+                    <!-- ====== 群号结束 ====== -->
+                </div>
+                <p style="margin-top:15px;opacity:0.7;">入群请备注游戏ID</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ====== 主题切换 ======
+        function toggleTheme() {
+            const body = document.documentElement;
+            const btn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.textContent = '🌙 深色模式';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = '☀️ 浅色模式';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        // 读取本地存储主题
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-toggle').textContent = '☀️ 浅色模式';
+        }
+
+        // ====== 导航高亮 ======
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+        window.addEventListener('scroll', () => {
+            let current = 0;
+            sections.forEach((sec, i) => {
+                if (window.scrollY >= sec.offsetTop - 300) current = i;
+            });
+            navLinks.forEach(l => l.classList.remove('active'));
+            navLinks[current]?.classList.add('active');
+        });
+    </script>
+</body>
+</html>
